@@ -13,7 +13,7 @@
 	
 * 5_DryCreek_Trim.ipynb -- trims the table to the same timestamp
 
-NetCDF_DryCreek.ipynb -- generates the final netcdf format data
+* NetCDF_DryCreek.ipynb -- generates the final netcdf format data
 
 #### Folders
 Functions -- contains local routines 

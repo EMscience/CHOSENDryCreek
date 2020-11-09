@@ -10,3 +10,5 @@ DryCreekAssembled_CLimateCatalog_output.pdf
 5_DryCreek_final_cleaned.csv
 5_DryCreek_final_cleaned_flag.csv
 DryCreek_NetCDF.nc
+Working_Widgets_DataQualityControlAndCleaning.ipynb
+Test_DataQualityControlAndCleaningWidgets.ipynb

@@ -366,6 +366,152 @@ def regressorFunc(table2, regThres=0.7):
       
 
         return entireY.T#,r2, len(ind2)
+    
+def funcClimateCatalogWg(table,QOI,thrLen=270,corrThr=0.7):
+       
+    
+    ind = np.where(~np.isnan(table[QOI])) # index where the value of y1 are not NaN
+    lenNonNan = np.shape(ind)[1]  # number of non nan data points 
+    totLen = np.shape(table[QOI])[0] # record length
+    
+    print('Total Record Length = ',totLen , ', Length of non NAN =', lenNonNan, '\n')
+    if np.shape(table[QOI])[0] > lenNonNan:
+        print('There are ', totLen - lenNonNan, ' missing values.', '\n' )  
+
+
+    yearInt = min(table.index.year)
+    yearMax = max(table.index.year)+1
+    years = np.arange(yearInt,yearMax, 1)
+
+
+    if table[QOI].min()<0:
+        ymin=  table[QOI].min()*1.2
+    else:
+        ymin=  table[QOI].min()*0.8
+
+    ymax=  table[QOI].max()*1.2
+    xmin=0
+    xmax=367
+
+    AnnualTable = np.ones([(yearMax-yearInt),xmax])*np.nan
+
+    yinter = {}
+    yinter[0]=table[QOI]
+    
+    #plt.plot(yinter[0])
+    
+    for year in years:
+        
+        d = yinter[0][yinter[0].index.year==year].copy(deep=True)
+        #print(d.shape[0],year)
+        AnnualTable[year-yearInt,0] = year
+        if year==yearMax-1:
+            #print('T')
+            AnnualTable[year-yearInt,1:d.shape[0]+1] = d.values # If the year ends earlier than Dec 31
+        else:
+            AnnualTable[year-yearInt,(xmax - (d.shape[0]) ):(xmax)] = d.values # If the year does not start at Jan 1
+
+
+    AnnualMean = (np.nanmean(AnnualTable,axis=0)) #(np.nanmedian(AnnualTable,axis=0))
+    AnnualStd = (np.nanstd(AnnualTable,axis=0)) 
+    AnnualMax = (np.nanmax(AnnualTable,axis=0)) # for outliers MAx
+    AnnualMin = (np.nanmin(AnnualTable,axis=0)) # minimum
+
+    AnnualTable2 = copy.deepcopy(AnnualTable)
+    
+    
+    #======================================================================================
+    # Calculate the year with the best/closest correlation coefficient for the nan year.
+    # Adopt the values from that year to the NAN values. If the closest year is nan or with corr < 0.7, go to the next non nan year.
+    # If this all does not work, Take the mean.
+    
+    yrs = years
+    for yr in yrs:
+        corrTable = np.ones([(yearMax-yearInt),2])*np.nan # correlation coefficient table |Year| R2 |
+        j = np.argwhere(AnnualTable[:,0]==yr)[0] # the row location of NAN year
+        for year in years:
+            if year != yr:
+                k = np.argwhere(AnnualTable[:,0]==year)[0] # Potential filler year
+                bad = ~np.logical_or(np.isnan(AnnualTable[j,1:xmax]), np.isnan(AnnualTable[k,1:xmax])) # NAN index in both years
+                qw1 = np.compress(bad[0,:], AnnualTable[j,1:xmax]) #NAN
+                qw2 = np.compress(bad[0,:], AnnualTable[k,1:xmax]) #potential
+                corrTable[year-yearInt,0] = year
+                if len(qw1)>=thrLen or len(qw2)>=thrLen: # if there are more than 9 months of data per year, perform correlation.
+                    corrTable[year-yearInt,1] = np.corrcoef(qw1, qw2)[0, 1]
+                    #print(yr,year,len(qw1),len(qw2),np.corrcoef(qw1, qw2)[0, 1])
+
+
+            #=========================================
+            #Fill the NAN values by the filler
+            #print(yr,all(np.isnan(corrTable[:,1])))
+            #if ~np.isnan(np.nanmax(corrTable[:,1]) ): # Skip filling if the entire year is nan
+            if all(np.isnan(corrTable[:,1]))==False: # Skip filling if the entire year is nan
+                indNAN = np.argwhere(np.isnan(AnnualTable[j,:])) # Location of nan. Wherever true, will be filled.
+                indFiller = np.argwhere(corrTable[:,1]==np.nanmax(corrTable[:,1]))[0] # Filler row number
+                valFiller = AnnualTable[indFiller,indNAN[:,1]] 
+
+                if np.nanmax(corrTable[:,1]) >= corrThr:         
+                    AnnualTable2[j,indNAN[:,1]] = valFiller + np.random.normal(scale=AnnualStd[indNAN[:,1]])# Filler value 
+
+                #==========================================
+                # If any remaining, fill it with mean series
+                im = np.argwhere(np.isnan(AnnualTable2[j,:])) # When both years have NaN at the same hour.
+                AnnualTable2[j,im[:,1]] = AnnualMean[im[:,1]] + np.random.normal(scale=AnnualStd[im[:,1]])# Filled with the mean value.                    
+
+
+                # Set Outliers caused by random to max and min values
+                with np.errstate(invalid='ignore'): # below the minimum
+                    ind_outlier = np.argwhere(AnnualTable2[j,1:] < AnnualMin[1:])
+                    p = ind_outlier[:,1] 
+
+                    if len(p)!=0:
+                        AnnualTable2[j,p+1] = AnnualMin[p+1] # +1 since it scans from 1:
+                        #print(j,yr,p,AnnualMin[p])
+                with np.errstate(invalid='ignore'):
+                    ind_outlier = np.argwhere(AnnualTable2[j,1:] > AnnualMax[1:])
+                    p = ind_outlier[:,1]
+
+                    if len(p)!=0:
+                        AnnualTable2[j,p+1] = AnnualMax[p+1]
+                        #print(p,AnnualMax[np.array(p)],AnnualMax[p])
+
+    ind_Climate ={}
+
+
+    y5 = yinter[0].copy(deep=True) # yinter is interpolated result
+
+    y5 = y5*np.nan
+
+    for year in years:
+        d = y5[y5.index.year==year].copy(deep=True)
+        ddim = d.shape[0]
+        if year == yearMax-1:
+            y5.loc[d.index] = AnnualTable2[year-yearInt,1:d.shape[0]+1] # If the year ends earlier than Dec 31
+        else:
+            y5.loc[d.index] = AnnualTable2[year-yearInt,(xmax - (d.shape[0]) ):(xmax)]
+
+        y5Temp = copy.deepcopy(y5) 
+
+
+        # location where Climate look up happened
+        ind_Climate[0] = np.argwhere(np.isnan(y5.to_numpy()) != np.isnan(yinter[0].to_numpy()) )
+        #print(year,yinter[0].name,len(ind_Climate[0]))
+        
+        
+       
+    print('Number of days where Climate Catalog is performed =',len(ind_Climate[0]),'\n')
+    
+    if np.max(y5Temp) > np.max(table[QOI]) or np.min(y5Temp) < np.min(table[QOI]):
+        print("Climate Catolog values are out of the original data range.")
+    else:
+        print("No Climate Catalog values are out of the original data range.")
+
+
+     
+    
+    return y5Temp,table[QOI], ind_Climate #AnnualTable2
+    
+    
 
     
 # In[ ]:

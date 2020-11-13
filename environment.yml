@@ -1,0 +1,11 @@
+name: CHOSEN_Data_QC_And_Filling_Missing_Values
+
+dependencies:
+  - python=3.7.1
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - scikit-learn
+  - sklearn
+  - ipywidgets

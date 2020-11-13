@@ -24,5 +24,4 @@ Functions -- contains local routines
 #### Presentations
 WorkflowChoosen.pptx --- a slide describing the CHOSEN dataset workflow
 
-===============================
 https://mybinder.org/v2/gh/EMscience/CHOSENDryCreek/master

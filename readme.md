@@ -11,20 +11,18 @@
 1_DryCreek_Download_Aggregation.csv -- raw hydro-meteorological data from the Dry Creek watershed data page.
 
 #### Scripts
-* 1_DryCreek_Download_Aggregation_Daily.ipynb -- script to aggregate sub-daily data to daily scale.
+* Widgets_DataQualityControlAndCleaning_V1 -- A note book that performs missing value filling. 
 
-* 2_DryCreek_DataFilling.ipynb -- The script the process data filling using the three methods, 
-	i)interpolation, ii) regression and iii) climate catalog
+    The filling methods used are:
+	1. Interpolation
+	2. Regression
+	3. Climate catalog
 	
-* 5_DryCreek_Trim.ipynb -- trims the table to the same timestamp
-
-* NetCDF_DryCreek.ipynb -- generates the final netcdf format data
 
 #### Folders
 Functions -- contains local routines 
 
-	* Abnormal_data_values_control.py -- functions that deals with unrealistic values
-	* Source_QC_functions_EM.py -- functions simpliffying multi-staion data filling 
+	* Source_QC_Widgets_functions_EM -- holds functions simpliffying multi-staion data filling 
 
 #### Presentations
 WorkflowChoosen.pptx --- a slide describing the CHOSEN dataset workflow

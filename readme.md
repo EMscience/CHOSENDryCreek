@@ -1,3 +1,7 @@
+
+https://mybinder.org/badge_logo.svg
+https://mybinder.org/v2/gh/EMscience/CHOSENDryCreek/master
+
 ## Dry Creek Notebook
 ### File Description
 #### Data
@@ -25,5 +29,3 @@ Functions -- contains local routines
 WorkflowChoosen.pptx --- a slide describing the CHOSEN dataset workflow
 
 
-https://mybinder.org/badge_logo.svg
-https://mybinder.org/v2/gh/EMscience/CHOSENDryCreek/master

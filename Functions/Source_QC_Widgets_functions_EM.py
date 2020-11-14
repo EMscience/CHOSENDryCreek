@@ -100,7 +100,7 @@ def widgetRegression(table, QOI, RegThreshold,xmin=None, xmax=None, ymin=None, y
 
 
 
-def regressorFunc(table2, regThres=0.7):
+def regressorFunc(table2, regThres):
     # table2 is the input where:
     # column 1 is y - predicted
     # the remaining columns are x - predictors.
@@ -185,11 +185,11 @@ def regressorFunc(table2, regThres=0.7):
             ind_r = np.argwhere(R2_rank==j) # identify where rank is first and goes to lower
             
             if (ind_r.shape[0]!= 0) and (r2[int(ind_r[0,1])] >= regThres): # perform wherever corr coefficient is > regThres
-                #print(ind_r.shape)
+                #print(ind_r.shape[0,1])
                 ### Liang edited
                 
                 ind4 = np.argwhere(np.isnan(entireY)==True)
-                #print(ind_r[0,1],r2[ind_r[0,1]])
+                # print(ind_r[0,1],regThres, r2[ind_r[0,1]])
                 entireY[0,ind4[:,1]] = y[ind4[:,1],int(ind_r[0,1])]
       
 
@@ -280,6 +280,7 @@ def funcClimateCatalogWg(table,QOI,thrLen=270,corrThr=0.7):
 
                 if np.nanmax(corrTable[:,1]) >= corrThr:         
                     AnnualTable2[j,indNAN[:,1]] = valFiller + np.random.normal(scale=AnnualStd[indNAN[:,1]])# Filler value 
+                    
 
                 #==========================================
                 # If any remaining, fill it with mean series
@@ -326,7 +327,7 @@ def funcClimateCatalogWg(table,QOI,thrLen=270,corrThr=0.7):
         #print(year,yinter[0].name,len(ind_Climate[0]))
         
         
-       
+    print(corrThr,corrTable[:,1])   
     print('Number of days where Climate Catalog is performed =',len(ind_Climate[0]),'\n')
     
     if np.max(y5Temp) > np.max(table[QOI]) or np.min(y5Temp) < np.min(table[QOI]):

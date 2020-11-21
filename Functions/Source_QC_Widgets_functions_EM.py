@@ -327,7 +327,7 @@ def funcClimateCatalogWg(table,QOI,thrLen=270,corrThr=0.7):
         #print(year,yinter[0].name,len(ind_Climate[0]))
         
         
-    print(corrThr,corrTable[:,1])   
+    #print(corrThr,corrTable[:,1])   
     print('Number of days where Climate Catalog is performed =',len(ind_Climate[0]),'\n')
     
     if np.max(y5Temp) > np.max(table[QOI]) or np.min(y5Temp) < np.min(table[QOI]):

@@ -1,5 +1,3 @@
-DryCreek_CLimateCatalog_output.pdf
-DryCreekAssembled_CLimateCatalog_output.pdf
 2_DryCreek_Interpolation.csv
 2_DryCreek_Interpolation_Flag.csv
 2_DryCreek_Interpolation_Flag.csv
@@ -10,7 +8,4 @@ DryCreekAssembled_CLimateCatalog_output.pdf
 5_DryCreek_final_cleaned.csv
 5_DryCreek_final_cleaned_flag.csv
 DryCreek_NetCDF.nc
-Old_Working_Widgets_DataQualityControlAndCleaning.ipynb
-Test_DataQualityControlAndCleaningWidgets.ipynb
-Widgets_DataQualityControlAndCleaning.ipynb
-Widgets_DataQualityControlAndCleaning.ipynb
+Widgets_DataQualityControlAndCleaning_V1-Copy1.ipynb

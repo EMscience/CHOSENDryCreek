@@ -11,7 +11,7 @@
 1_DryCreek_Download_Aggregation.csv -- raw hydro-meteorological data from the Dry Creek watershed data page.
 
 #### Scripts
-* Widgets_DataQualityControlAndCleaning_V1 -- A note book that performs missing value filling. 
+* EM_01_Jupyter Supported Interactive Data Processing Workflow.ipynb  -- A note book that performs missing value filling. 
 
     The filling methods used are:
 	1. Interpolation

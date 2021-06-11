@@ -3,7 +3,7 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EMscience/CHOSENDryCreek/master)
 
 
-## Jupyter Supported Interactive Hydrmeteorological Data Processing Workflow
+## Jupyter Supported Interactive Hydrmeteorological Data Preprocessing Workflow
 
 Hydrological Data Quality Control and Filling Missing Values
 

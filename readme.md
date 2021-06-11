@@ -28,12 +28,8 @@ The details of the methods are described in the notebook file (EM_01_Jupyter Sup
 ### File Description
 
 #### Scripts
-* EM_01_Jupyter Supported Interactive Data Processing Workflow.ipynb  -- A note book that performs missing value filling. 
+* EM_01_Jupyter Supported Interactive Data Processing Workflow.ipynb  -- A note book that performs missing value filling using the above three methods. 
 
-    The filling methods used are:
-	1. Interpolation
-	2. Regression
-	3. Climate catalog
 	
 #### Data
 1_DryCreek_DischargeTable.csv -- raw streamflow data from the Dry Creek watershed data page.

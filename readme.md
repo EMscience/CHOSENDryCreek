@@ -3,7 +3,7 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EMscience/CHOSENDryCreek/master)
 
 
-## Jupyter Supported Interactive Hydrmeteorological Data Preprocessing Workflow
+## Jupyter Supported Interactive Hydrmeteorological Data Preprocessing
 
 Hydrological Data Quality Control and Filling Missing Values
 
@@ -14,7 +14,7 @@ dataset. This interactive platform is at the core of the Comprehensive Hydrolog
 [CHOSEN](https://gitlab.com/esdl/chosen) provides a multitude of intensively measured hydrometeorological datasets (e.g., snow melt and soil moisture data besides 
 the common precipitation, air temperature and streamflow measurements) across 30 watersheds in the conterminous US. 
 
-### Methodology
+### Method
 
 The interactive preprocessing platform starts with acquiring a standard raw hydrometeorological data table and proceeds with cells that perform interactive 
 computation to fill missing values. Three missing value filling methods are adopted:

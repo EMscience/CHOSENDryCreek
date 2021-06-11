@@ -2,6 +2,7 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EMscience/CHOSENDryCreek/master)
 
+Please click the above ↑↑ binder link to launch the notebook on cloud.
 
 ## Jupyter Supported Interactive Hydrmeteorological Data Preprocessing
 

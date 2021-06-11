@@ -32,6 +32,8 @@ The details of the methods are described in the notebook file (EM_01_Jupyter Sup
 
 	
 #### Data
+
+Out of the CHOSEN dataset, the notebook demonstrates the application of the interactive data preprocessing at the [Dry Creek watershed, ID](https://www.boisestate.edu/drycreek/).
 1_DryCreek_DischargeTable.csv -- raw streamflow data from the Dry Creek watershed data page.
 
 1_DryCreek_Download_Aggregation.csv -- raw hydro-meteorological data from the Dry Creek watershed data page.
